@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Contact | Jade Advisors | A leading placement agent platform</title>
+<link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+<link href="css/bootstrap-reboot.min.css" type="text/css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
+<link rel="stylesheet" href="fa/css/font-awesome.min.css">
+<link href="css/custom.css" type="text/css" rel="stylesheet">
+<style type="text/css">
+body,td,th {
+	font-family: "Nunito Sans", sans-serif;
+}
+
+/* Form validation styles */
+.form-control.is-valid {
+    border-color: #00a651;
+    box-shadow: 0 0 0 0.2rem rgba(0, 166, 81, 0.25);
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.alert {
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+}
+
+.alert-dismissable .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    color: inherit;
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 0.2;
+    cursor: pointer;
+}
+
+.alert-dismissable .close:hover {
+    opacity: 0.5;
+}
+
+/* Loading state for submit button */
+.btn-loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.btn-loading:after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Custom Captcha Styles */
+.custom-captcha {
+    margin: 15px 0;
+}
+
+.captcha-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: #7d7d7d;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 0;
+}
+
+.captcha-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #7d7d7d;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.captcha-checkbox:hover input ~ .checkmark {
+    border-color: #00a651;
+}
+
+.captcha-checkbox input:checked ~ .checkmark {
+    background-color: #00a651;
+    border-color: #00a651;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.captcha-checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.captcha-checkbox .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.captcha-text {
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.captcha-checkbox input:checked ~ .captcha-text {
+    color: #00a651;
+    font-weight: 600;
+}
+
+/* Captcha verification states */
+.captcha-verified {
+    color: #00a651 !important;
+}
+
+.captcha-verified .checkmark {
+    background-color: #00a651;
+    border-color: #00a651;
+}
+
+.captcha-verified .captcha-text {
+    color: #00a651;
+    font-weight: 600;
+}
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top">
+  <div class="container"> <a class="navbar-brand" href="index.html"> <img src="images/logo.svg" width="157" height="65" alt=""> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"> <a class="nav-link" href="about.html">About</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="approach.html">Approach</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="services.html">Services</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="geography.html">Geography</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="clients.html">Clients</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="team.html">Team</a> </li>
+        <li class="nav-item"> <a class="nav-link current" href="contact.html">Contact</a> </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="section topdiv">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1> Contact us</h1>
+
+      </div>
+    </div>
+  </div>
+  
+  
+    <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <p>For placement services, contact us at <a href="mailto:info@jadeadv.com">info@jadeadv.com</a></p>
+        <p>For careers, inquire at <a href="mailto:careers@jadeadv.com">careers@jadeadv.com</a></p>
+        <p>To become part of our distributor network, write to us at <a href="mailto:distribution@jadeadv.com">distribution@jadeadv.com</a></p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+<div class="section  bg-grey">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <h1>Send us a Message</h1>
+
+        <form class="form-horizontal" id="contact-form">
+          <div class="messages">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="name">Name:</label>
+                    <input name="name" type="text" required data-error="Name is required" class="form-control input-md" id="name" autocomplete="on">
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="email">Email Address:</label>
+                    <input name="email" type="email"   class="form-control input-md" id="email" autocomplete="on" required data-error="Valid email is required.">
+                    <div class="help-block with-errors"></div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="phone">Phone:</label>
+                    <input name="phone" type="text" required class="form-control input-md" id="phone">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="message">Message:</label>
+                    <textarea name="message" rows="3"  class="form-control input-md" id="message"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="custom-captcha">
+                      <label class="captcha-checkbox">
+                        <input type="checkbox" id="human-verification" name="human-verification">
+                        <span class="checkmark"></span>
+                        <span class="captcha-text">I am not a robot</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 text-right">
+                <div class="form-group">
+                  <input name="Submit" type="submit" id="Submit" value="SUBMIT" class="btn btn-default">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="ftmenu social bdrTop">
+          <ul>
+            <li><a href="mailto:info@jadeadv.com">info@jadeadv.com</a></li>
+            <li> <!-- <a href="https://www.facebook.com/Jade-Advisors-309891336161023/" target="_blank">    <i class="fa fa-facebook" aria-hidden="true"></i> --> </a> 
+            <a href="https://www.linkedin.com/company/jadeadvisors/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="ftmenu bdrTop">
+          <ul>
+            <li> Copyright 2025 - 2026, Jade Advisors</li>
+            <li> All Rights Reserved </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="js/popper.min.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/validator.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script src="js/contact-new.js"></script> 
+<script src="js/scroll.js"></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+ $(window).scroll(function (event){"use strict";var y = $(this).scrollTop();if (y >= 150) {$('.navbar-fixed-top').addClass('resized');}else {$('.navbar-fixed-top').removeClass('resized');}});
