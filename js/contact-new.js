@@ -204,12 +204,8 @@ $(function () {
             .then(function(response) {
                 console.log('Email sent successfully!', response.status, response.text);
                 
-                // Show success message
-                showMessage('success', 'Thank you! Your message has been sent successfully. We will get back to you shortly.');
-                
-                // Reset form
-                resetForm();
-                setSubmitButtonLoading(false);
+                // Redirect to thank you page after successful submission
+                window.location.href = 'thankyou.html';
                 
             }, function(error) {
                 console.error('Failed to send email:', error);
