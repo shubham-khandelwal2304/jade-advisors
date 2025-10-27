@@ -2,10 +2,10 @@ $(function () {
     "use strict";
     
     // Initialize EmailJS
-    emailjs.init("dkcCcQXmETM_pmNga");
+    emailjs.init("eVdll3huwnqusvwy0");
     
     // Test EmailJS connection
-    console.log('EmailJS initialized with public key: dkcCcQXmETM_pmNga');
+    console.log('EmailJS initialized with public key: eVdll3huwnqusvwy0');
     
     // Initialize form validation
     $('#contact-form').validator();
@@ -196,11 +196,11 @@ $(function () {
         };
         
         console.log('Sending email with params:', templateParams);
-        console.log('Service ID: service_9y4csy8');
-        console.log('Template ID: template_6rd61u6');
+        console.log('Service ID: service_kh0cqya');
+        console.log('Template ID: template_sbu6zoa');
         
         // Send email using EmailJS
-        emailjs.send("service_9y4csy8", "template_6rd61u6", templateParams)
+        emailjs.send("service_kh0cqya", "template_sbu6zoa", templateParams)
             .then(function(response) {
                 console.log('Email sent successfully!', response.status, response.text);
                 
@@ -212,7 +212,7 @@ $(function () {
                 console.error('Error details:', JSON.stringify(error));
                 
                 // Show error message
-                showMessage('danger', 'Sorry, there was an error sending your message. Please try again or contact us directly at shubhamk@excollo.com');
+                showMessage('danger', 'Sorry, there was an error sending your message. Please try again or contact us directly at info@jadeadv.com');
                 
                 // Re-enable submit button
                 setSubmitButtonLoading(false);
