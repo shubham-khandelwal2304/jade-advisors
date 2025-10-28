@@ -8,12 +8,23 @@ $(function () {
     console.log('EmailJS initialized with public key: eVdll3huwnqusvwy0');
     
     // Initialize form validation
-    $('#contact-form').validator();
+    $('#contact-form').validator({
+        focus: false
+    });
     
     // Handle form submission
     $('#contact-form').on('submit', function (e) {
         console.log('Form submit event triggered');
         e.preventDefault(); // Prevent default form submission
+        
+        // Store current scroll position to prevent auto-scroll
+        var currentScrollTop = $(window).scrollTop();
+        
+        // Prevent any focus changes that might cause scrolling
+        $('input, textarea, button').blur();
+        
+        // Prevent scrolling by temporarily disabling scroll
+        $('html, body').css('overflow', 'hidden');
         
         // Process the form
         // Get form data
@@ -44,11 +55,19 @@ $(function () {
         }
         
         if (!allFieldsValid) {
+            // Restore scroll position and overflow
+            setTimeout(function() {
+                $(window).scrollTop(currentScrollTop);
+                $('html, body').css('overflow', 'auto');
+            }, 100);
             return false;
         }
         
         // Show loading state
         setSubmitButtonLoading(true);
+        
+        // Restore overflow for successful submission
+        $('html, body').css('overflow', 'auto');
         
         // Send email using EmailJS
         sendEmail(formData);
@@ -83,6 +102,9 @@ $(function () {
         if (!data.phone) {
             errorMessage += 'Phone number is required.<br>';
             isValid = false;
+        } else if (!isValidPhone(data.phone)) {
+            errorMessage += 'Phone number should contain only numbers.<br>';
+            isValid = false;
         }
         
         // Validate message
@@ -112,6 +134,12 @@ $(function () {
     function isValidEmail(email) {
         var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
+    }
+    
+    // Phone validation function
+    function isValidPhone(phone) {
+        var phoneRegex = /^[0-9]+$/;
+        return phoneRegex.test(phone);
     }
     
     // Show message function
@@ -148,6 +176,16 @@ $(function () {
         $('.help-block.with-errors').text('');
         $('.form-control').removeClass('is-invalid');
     }
+    
+    // Prevent non-numeric input in phone field
+    $('#phone').on('input', function() {
+        var value = $(this).val();
+        // Remove any non-numeric characters
+        var numericValue = value.replace(/[^0-9]/g, '');
+        if (value !== numericValue) {
+            $(this).val(numericValue);
+        }
+    });
     
     // Real-time validation feedback
     $('#name, #email, #phone, #message').on('blur', function() {
@@ -198,6 +236,8 @@ $(function () {
         } else if (fieldName === 'phone') {
             if (!value) {
                 showFieldError(field, 'Phone number is required.');
+            } else if (!isValidPhone(value)) {
+                showFieldError(field, 'Phone number should contain only numbers.');
             } else {
                 showFieldSuccess(field);
             }
@@ -283,6 +323,12 @@ $(function () {
                 
                 // Show error message in a more user-friendly way
                 alert('Sorry, there was an error sending your message. Please try again or contact us directly at info@jadeadv.com');
+                
+                // Restore scroll position and overflow
+                setTimeout(function() {
+                    $(window).scrollTop(currentScrollTop);
+                    $('html, body').css('overflow', 'auto');
+                }, 100);
                 
                 // Re-enable submit button
                 setSubmitButtonLoading(false);
