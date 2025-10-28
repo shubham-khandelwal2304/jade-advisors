@@ -25,13 +25,29 @@ $(function () {
             recaptchaResponse: grecaptcha.getResponse()
         };
         
-        // Validate required fields
-        if (!validateForm(formData)) {
+        // Validate all fields individually first
+        var allFieldsValid = true;
+        $('#name, #email, #phone, #message').each(function() {
+            validateField($(this));
+            if ($(this).hasClass('is-invalid')) {
+                allFieldsValid = false;
+            }
+        });
+        
+        // Validate reCAPTCHA
+        var recaptchaValid = formData.recaptchaResponse && formData.recaptchaResponse.length > 0;
+        if (!recaptchaValid) {
+            $('#recaptcha-error').text('Please verify that you are not a robot by completing the reCAPTCHA.');
+            allFieldsValid = false;
+        } else {
+            $('#recaptcha-error').text('');
+        }
+        
+        if (!allFieldsValid) {
             return false;
         }
         
         // Show loading state
-        showMessage('info', 'Sending your message...', true);
         setSubmitButtonLoading(true);
         
         // Send email using EmailJS
@@ -49,11 +65,14 @@ $(function () {
         if (!data.name) {
             errorMessage += 'Name is required.<br>';
             isValid = false;
+        } else if (data.name.length < 2) {
+            errorMessage += 'Name must be at least 2 characters.<br>';
+            isValid = false;
         }
         
         // Validate email
         if (!data.email) {
-            errorMessage += 'Email address is required.<br>';
+            errorMessage += 'Valid email is required.<br>';
             isValid = false;
         } else if (!isValidEmail(data.email)) {
             errorMessage += 'Please enter a valid email address.<br>';
@@ -66,14 +85,24 @@ $(function () {
             isValid = false;
         }
         
-        // Validate reCAPTCHA
-        if (!data.recaptchaResponse) {
-            errorMessage += 'Please verify that you are not a robot by completing the reCAPTCHA.<br>';
+        // Validate message
+        if (!data.message) {
+            errorMessage += 'Message is required.<br>';
             isValid = false;
         }
         
+        // Validate reCAPTCHA
+        if (!data.recaptchaResponse) {
+            errorMessage += 'Please verify that you are not a robot by completing the reCAPTCHA.<br>';
+            $('#recaptcha-error').text('Please verify that you are not a robot by completing the reCAPTCHA.');
+            isValid = false;
+        } else {
+            $('#recaptcha-error').text('');
+        }
+        
         if (!isValid) {
-            showMessage('danger', errorMessage);
+            // Don't show consolidated error message - individual field errors are already shown
+            // showMessage('danger', errorMessage);
         }
         
         return isValid;
@@ -121,8 +150,27 @@ $(function () {
     }
     
     // Real-time validation feedback
-    $('#name, #email, #phone').on('blur', function() {
+    $('#name, #email, #phone, #message').on('blur', function() {
+        validateField($(this));
+    });
+    
+    // Also validate on input for immediate feedback
+    $('#name, #email, #phone, #message').on('input', function() {
         var field = $(this);
+        var value = field.val().trim();
+        
+        // Only show validation if user has started typing
+        if (value.length > 0) {
+            validateField(field);
+        } else {
+            // Clear validation when field is empty
+            field.removeClass('is-invalid is-valid');
+            field.siblings('.help-block.with-errors').text('');
+        }
+    });
+    
+    // Field validation function
+    function validateField(field) {
         var value = field.val().trim();
         var fieldName = field.attr('name');
         
@@ -131,22 +179,36 @@ $(function () {
         field.siblings('.help-block.with-errors').text('');
         
         // Validate based on field type
-        if (fieldName === 'name' && !value) {
-            showFieldError(field, 'Name is required.');
+        if (fieldName === 'name') {
+            if (!value) {
+                showFieldError(field, 'Name is required.');
+            } else if (value.length < 2) {
+                showFieldError(field, 'Name must be at least 2 characters.');
+            } else {
+                showFieldSuccess(field);
+            }
         } else if (fieldName === 'email') {
             if (!value) {
-                showFieldError(field, 'Email address is required.');
+                showFieldError(field, 'Valid email is required.');
             } else if (!isValidEmail(value)) {
                 showFieldError(field, 'Please enter a valid email address.');
             } else {
                 showFieldSuccess(field);
             }
-        } else if (fieldName === 'phone' && !value) {
-            showFieldError(field, 'Phone number is required.');
-        } else if (value) {
-            showFieldSuccess(field);
+        } else if (fieldName === 'phone') {
+            if (!value) {
+                showFieldError(field, 'Phone number is required.');
+            } else {
+                showFieldSuccess(field);
+            }
+        } else if (fieldName === 'message') {
+            if (!value) {
+                showFieldError(field, 'Message is required.');
+            } else {
+                showFieldSuccess(field);
+            }
         }
-    });
+    }
     
     // Show field error
     function showFieldError(field, message) {
@@ -163,14 +225,18 @@ $(function () {
     // Handle reCAPTCHA callback
     window.onRecaptchaCallback = function() {
         console.log('reCAPTCHA loaded successfully');
+        // Clear any reCAPTCHA error messages
+        $('#recaptcha-error').text('');
     };
     
     window.onRecaptchaExpired = function() {
         console.log('reCAPTCHA expired');
+        $('#recaptcha-error').text('reCAPTCHA has expired. Please complete it again.');
     };
     
     window.onRecaptchaError = function() {
         console.log('reCAPTCHA error');
+        $('#recaptcha-error').text('reCAPTCHA error occurred. Please try again.');
     };
     
     // Set submit button loading state
@@ -215,8 +281,8 @@ $(function () {
                 console.error('Failed to send email:', error);
                 console.error('Error details:', JSON.stringify(error));
                 
-                // Show error message
-                showMessage('danger', 'Sorry, there was an error sending your message. Please try again or contact us directly at info@jadeadv.com');
+                // Show error message in a more user-friendly way
+                alert('Sorry, there was an error sending your message. Please try again or contact us directly at info@jadeadv.com');
                 
                 // Re-enable submit button
                 setSubmitButtonLoading(false);
