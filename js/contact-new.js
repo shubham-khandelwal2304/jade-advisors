@@ -22,7 +22,7 @@ $(function () {
             email: $('#email').val().trim(),
             phone: $('#phone').val().trim(),
             message: $('#message').val().trim(),
-            humanVerification: $('#human-verification').is(':checked')
+            recaptchaResponse: grecaptcha.getResponse()
         };
         
         // Validate required fields
@@ -66,9 +66,9 @@ $(function () {
             isValid = false;
         }
         
-        // Validate human verification checkbox
-        if (!data.humanVerification) {
-            errorMessage += 'Please verify that you are not a robot by checking the box.<br>';
+        // Validate reCAPTCHA
+        if (!data.recaptchaResponse) {
+            errorMessage += 'Please verify that you are not a robot by completing the reCAPTCHA.<br>';
             isValid = false;
         }
         
@@ -110,9 +110,10 @@ $(function () {
     function resetForm() {
         $('#contact-form')[0].reset();
         
-        // Reset captcha checkbox
-        $('#human-verification').prop('checked', false);
-        $('.captcha-checkbox').removeClass('captcha-verified');
+        // Reset reCAPTCHA
+        if (typeof grecaptcha !== 'undefined') {
+            grecaptcha.reset();
+        }
         
         // Clear any validation errors
         $('.help-block.with-errors').text('');
@@ -159,15 +160,18 @@ $(function () {
         field.siblings('.help-block.with-errors').text('');
     }
     
-    // Handle captcha checkbox change
-    $('#human-verification').on('change', function() {
-        if ($(this).is(':checked')) {
-            $('.captcha-checkbox').addClass('captcha-verified');
-            console.log('Human verification completed');
-        } else {
-            $('.captcha-checkbox').removeClass('captcha-verified');
-        }
-    });
+    // Handle reCAPTCHA callback
+    window.onRecaptchaCallback = function() {
+        console.log('reCAPTCHA loaded successfully');
+    };
+    
+    window.onRecaptchaExpired = function() {
+        console.log('reCAPTCHA expired');
+    };
+    
+    window.onRecaptchaError = function() {
+        console.log('reCAPTCHA error');
+    };
     
     // Set submit button loading state
     function setSubmitButtonLoading(isLoading) {

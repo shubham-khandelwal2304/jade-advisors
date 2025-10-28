@@ -102,95 +102,6 @@ body,td,th {
     to { transform: rotate(360deg); }
 }
 
-/* Custom Captcha Styles */
-.custom-captcha {
-    margin: 15px 0;
-}
-
-.captcha-checkbox {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 16px;
-    color: #7d7d7d;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 0;
-}
-
-.captcha-checkbox input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #fff;
-    border: 2px solid #7d7d7d;
-    border-radius: 3px;
-    transition: all 0.3s ease;
-}
-
-.captcha-checkbox:hover input ~ .checkmark {
-    border-color: #00a651;
-}
-
-.captcha-checkbox input:checked ~ .checkmark {
-    background-color: #00a651;
-    border-color: #00a651;
-}
-
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-
-.captcha-checkbox input:checked ~ .checkmark:after {
-    display: block;
-}
-
-.captcha-checkbox .checkmark:after {
-    left: 6px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-
-.captcha-text {
-    margin-left: 10px;
-    font-weight: 500;
-}
-
-.captcha-checkbox input:checked ~ .captcha-text {
-    color: #00a651;
-    font-weight: 600;
-}
-
-/* Captcha verification states */
-.captcha-verified {
-    color: #00a651 !important;
-}
-
-.captcha-verified .checkmark {
-    background-color: #00a651;
-    border-color: #00a651;
-}
-
-.captcha-verified .captcha-text {
-    color: #00a651;
-    font-weight: 600;
-}
 </style>
 </head>
 <body>
@@ -274,13 +185,7 @@ body,td,th {
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-12">
-                    <div class="custom-captcha">
-                      <label class="captcha-checkbox">
-                        <input type="checkbox" id="human-verification" name="human-verification">
-                        <span class="checkmark"></span>
-                        <span class="captcha-text">I am not a robot</span>
-                      </label>
-                    </div>
+                    <div class="g-recaptcha" data-sitekey="6Lfbs_krAAAAAD0hBtugh6Awhvduitm_z96poCPC" data-callback="onRecaptchaCallback" data-expired-callback="onRecaptchaExpired" data-error-callback="onRecaptchaError"></div>
                   </div>
                 </div>
               </div>
@@ -325,5 +230,6 @@ body,td,th {
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script src="js/contact-new.js"></script> 
 <script src="js/scroll.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 </html>
